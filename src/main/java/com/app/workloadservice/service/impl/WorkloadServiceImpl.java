@@ -6,7 +6,7 @@ import com.app.workloadservice.dto.WorkloadRequestDto;
 import com.app.workloadservice.entity.MonthsInfo;
 import com.app.workloadservice.entity.Trainer;
 import com.app.workloadservice.entity.YearsInfo;
-import com.app.workloadservice.repository.WorkloadMemory;
+import com.app.workloadservice.repository.impl.InMemoryTrainingWorkloadRepository;
 import com.app.workloadservice.service.WorkloadService;
 import com.app.workloadservice.util.ActionType;
 import lombok.RequiredArgsConstructor;
@@ -19,7 +19,7 @@ import java.util.Objects;
 @Slf4j
 @RequiredArgsConstructor
 public class WorkloadServiceImpl implements WorkloadService {
-    private final WorkloadMemory repository;
+    private final InMemoryTrainingWorkloadRepository repository;
 
     @Override
     public void updateTrainerWorkload(WorkloadRequestDto request) {
