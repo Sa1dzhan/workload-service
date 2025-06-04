@@ -1,5 +1,7 @@
 package com.app.workloadservice.service.impl;
 
+import com.app.workloadservice.dto.DurationRequestDto;
+import com.app.workloadservice.dto.DurationResponseDto;
 import com.app.workloadservice.dto.WorkloadRequestDto;
 import com.app.workloadservice.entity.MonthsInfo;
 import com.app.workloadservice.entity.Trainer;
@@ -11,7 +13,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.Objects;
 
 @Service
 @Slf4j
@@ -81,5 +83,26 @@ public class WorkloadServiceImpl implements WorkloadService {
         }
 
         return mInfo;
+    }
+
+    @Override
+    public DurationResponseDto getWorkloadDuration(DurationRequestDto request) {
+        Trainer trainer = repository.getTrainer(request.getUsername());
+        if (Objects.isNull(trainer)) {
+            throw new RuntimeException("Trainer with such username " + request.getUsername() + " not found");
+        }
+
+        int year = request.getTrainingDate().getYear();
+        int month = request.getTrainingDate().getMonth();
+
+        YearsInfo yInfo = getOrCreateYear(trainer, year);
+        MonthsInfo mInfo = getOrCreateMonth(yInfo, month);
+
+        DurationResponseDto response = new DurationResponseDto();
+        response.setUsername(request.getUsername());
+        response.setDuration(mInfo.getDuration());
+
+        log.info("Retrieved duration {} for Trainer {}", response.getDuration(), response.getUsername());
+        return response;
     }
 }

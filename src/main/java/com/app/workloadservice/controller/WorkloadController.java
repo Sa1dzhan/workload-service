@@ -1,5 +1,7 @@
 package com.app.workloadservice.controller;
 
+import com.app.workloadservice.dto.DurationRequestDto;
+import com.app.workloadservice.dto.DurationResponseDto;
 import com.app.workloadservice.dto.WorkloadRequestDto;
 import com.app.workloadservice.service.WorkloadService;
 import com.app.workloadservice.util.JwtUtil;
@@ -39,6 +41,29 @@ public class WorkloadController {
             log.info("Transaction ID: {} | Successfully updated workload for {}", transactionId, request.getUsername());
 
             return new ResponseEntity<>(HttpStatus.OK);
+        } catch (Exception ex) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+
+    @GetMapping
+    public ResponseEntity<DurationResponseDto> getTrainerWorkload(
+            @Valid @RequestBody DurationRequestDto request,
+            @RequestHeader("Authorization") String token,
+            @RequestHeader(value = "transactionId") String transactionId) {
+        try {
+            log.info("Transaction ID: {} | Duration request for {}", transactionId, request.getUsername());
+            String usrToken = jwtUtil.getUsernameFromToken(token.substring(7).trim());
+            if (!Objects.equals(request.getUsername(), usrToken)) {
+                log.error("Usernames not same {}(token) != {}(request)", usrToken, request.getUsername());
+                return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+            }
+
+            DurationResponseDto response = workloadService.getWorkloadDuration(request);
+            log.info("Transaction ID: {} | Successfully retrieved duration for {}", transactionId, usrToken);
+
+            return new ResponseEntity<>(response, HttpStatus.OK);
         } catch (Exception ex) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
