@@ -1,0 +1,34 @@
+spring:
+  application:
+    name: workload-service
+  cloud:
+    openfeign:
+      circuitbreaker:
+        enabled: true
+
+server:
+  port: 8081
+
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+    register-with-eureka: true
+    fetch-registry: true
+  instance:
+    hostname: localhost
+    prefer-ip-address: true
+    instance-id: ${spring.application.name}:${server.port}
+
+logging:
+  level:
+    com.example.trainerworkload: DEBUG
+    org.springframework.web: INFO
+    org.springframework.security: DEBUG
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
