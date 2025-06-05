@@ -7,7 +7,9 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
@@ -15,6 +17,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Objects;
 
 @Component
 @Slf4j
@@ -30,12 +33,17 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         if (authHeader != null && authHeader.startsWith("Bearer ")) {
             jwt = authHeader.substring(7).trim();
-            log.debug("Extracted JWT token: [{}]", jwt); // Add debug log
             username = jwtUtil.getUsernameFromToken(jwt);
         }
 
-        if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (username != null && auth != null && auth.isAuthenticated()) {
             if (jwtUtil.validateToken(jwt)) {
+                if (!Objects.equals(auth.getName(), jwtUtil.getUsernameFromToken(jwt))) {
+                    response.setStatus(HttpStatus.UNAUTHORIZED.value());
+                    return;
+                }
+
                 UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
                         username, null, new ArrayList<>());
                 authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));

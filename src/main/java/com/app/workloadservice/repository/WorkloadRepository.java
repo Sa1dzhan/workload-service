@@ -1,9 +1,9 @@
 package com.app.workloadservice.repository;
 
-import com.app.workloadservice.entity.Trainer;
+import com.app.workloadservice.entity.TrainerWorkload;
 
 public interface WorkloadRepository {
-    void saveTrainer(Trainer trainer);
+    void saveTrainer(TrainerWorkload trainerWorkload);
 
-    Trainer getTrainer(String username);
+    TrainerWorkload getTrainer(String username);
 }

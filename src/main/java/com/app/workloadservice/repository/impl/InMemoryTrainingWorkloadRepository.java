@@ -1,6 +1,6 @@
 package com.app.workloadservice.repository.impl;
 
-import com.app.workloadservice.entity.Trainer;
+import com.app.workloadservice.entity.TrainerWorkload;
 import com.app.workloadservice.repository.WorkloadRepository;
 import org.springframework.stereotype.Repository;
 
@@ -9,15 +9,15 @@ import java.util.Objects;
 
 @Repository
 public class InMemoryTrainingWorkloadRepository implements WorkloadRepository {
-    HashMap<String, Trainer> inMemory = new HashMap<>();
+    HashMap<String, TrainerWorkload> inMemory = new HashMap<>();
 
     @Override
-    public void saveTrainer(Trainer trainer) {
-        inMemory.putIfAbsent(trainer.getUsername(), trainer);
+    public void saveTrainer(TrainerWorkload trainerWorkload) {
+        inMemory.putIfAbsent(trainerWorkload.getUsername(), trainerWorkload);
     }
 
     @Override
-    public Trainer getTrainer(String username) {
+    public TrainerWorkload getTrainer(String username) {
         return inMemory.get(username);
     }
 
