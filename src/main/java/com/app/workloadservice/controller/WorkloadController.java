@@ -20,12 +20,11 @@ public class WorkloadController {
 
     @PostMapping("/update")
     public ResponseEntity<?> updateTrainerWorkload(
-            @Valid @RequestBody WorkloadRequestDto request,
-            @RequestHeader(value = "transactionId") String transactionId) {
+            @Valid @RequestBody WorkloadRequestDto request) {
 
-        log.info("Transaction ID: {} | Workload update request for {}", transactionId, request.getUsername());
+        log.info("Workload update request for {}", request.getUsername());
         workloadService.updateTrainerWorkload(request);
-        log.info("Transaction ID: {} | Successfully updated workload for {}", transactionId, request.getUsername());
+        log.info("Successfully updated workload for {}", request.getUsername());
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
@@ -33,12 +32,11 @@ public class WorkloadController {
 
     @GetMapping
     public ResponseEntity<DurationResponseDto> getTrainerWorkload(
-            @Valid @RequestBody DurationRequestDto request,
-            @RequestHeader(value = "transactionId") String transactionId) {
+            @Valid @RequestBody DurationRequestDto request) {
 
-        log.info("Transaction ID: {} | Duration request for {}", transactionId, request.getUsername());
+        log.info("Duration request for {}", request.getUsername());
         DurationResponseDto response = workloadService.getWorkloadDuration(request);
-        log.info("Transaction ID: {} | Successfully retrieved duration for {}", transactionId, response.getUsername());
+        log.info("Successfully retrieved duration for {}", response.getUsername());
 
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
