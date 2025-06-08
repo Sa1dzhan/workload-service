@@ -60,7 +60,7 @@ public class WorkloadServiceImpl implements WorkloadService {
 
         long duration = trainerWorkload.getDurationForMonth(
                 request.getTrainingDate().getYear(),
-                request.getTrainingDate().getMonth()
+                request.getTrainingDate().getMonth().getValue()
         );
 
         DurationResponseDto response = new DurationResponseDto();

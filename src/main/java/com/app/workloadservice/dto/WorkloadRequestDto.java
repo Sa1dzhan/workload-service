@@ -5,7 +5,6 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 import java.time.LocalDate;
-import java.util.Date;
 
 @Data
 public class WorkloadRequestDto {
@@ -22,7 +21,7 @@ public class WorkloadRequestDto {
     private Boolean isActive;
 
     @NotNull
-    private Date trainingDate;
+    private LocalDate trainingDate;
 
     @NotNull
     private Long trainingDuration;

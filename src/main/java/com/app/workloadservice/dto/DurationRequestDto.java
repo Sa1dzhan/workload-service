@@ -3,7 +3,7 @@ package com.app.workloadservice.dto;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 @Data
 public class DurationRequestDto {
@@ -11,5 +11,5 @@ public class DurationRequestDto {
     private String username;
 
     @NotNull
-    public Date trainingDate;
+    public LocalDate trainingDate;
 }

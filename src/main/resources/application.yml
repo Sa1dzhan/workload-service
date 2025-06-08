@@ -5,6 +5,8 @@ spring:
     openfeign:
       circuitbreaker:
         enabled: true
+    inetutils:
+      preferred-networks: 127.0.0.1
 
 server:
   port: 8081

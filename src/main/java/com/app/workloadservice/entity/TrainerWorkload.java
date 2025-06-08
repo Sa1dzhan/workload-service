@@ -6,7 +6,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Objects;
 
@@ -21,9 +21,9 @@ public class TrainerWorkload {
     private Boolean status;
     private HashMap<Integer, YearsInfo> years = new HashMap<>();
 
-    public void updateWorkload(Date trainingDate, long trainingDuration, ActionType actionType) {
+    public void updateWorkload(LocalDate trainingDate, long trainingDuration, ActionType actionType) {
         int year = trainingDate.getYear();
-        int month = trainingDate.getMonth();
+        int month = trainingDate.getMonth().getValue();
 
         YearsInfo yearInfo = getOrCreateYear(year);
         MonthsInfo monthInfo = getOrCreateMonth(yearInfo, month);
