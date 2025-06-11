@@ -3,7 +3,7 @@ package com.app.workloadservice.repository;
 import com.app.workloadservice.entity.TrainerWorkload;
 
 public interface WorkloadRepository {
-    void saveTrainer(TrainerWorkload trainerWorkload);
+    void save(TrainerWorkload trainerWorkload);
 
-    TrainerWorkload getTrainer(String username);
+    TrainerWorkload findByUsername(String username);
 }

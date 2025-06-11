@@ -29,7 +29,7 @@ public class WorkloadServiceImpl implements WorkloadService {
                     request.getActionType()
             );
 
-            repository.saveTrainer(trainerWorkload);
+            repository.save(trainerWorkload);
             log.info("Updated workload for username {}", trainerWorkload.getUsername());
         } catch (Exception ex) {
             log.error("Error occurred: {}", ex.getMessage());
@@ -38,7 +38,7 @@ public class WorkloadServiceImpl implements WorkloadService {
     }
 
     private TrainerWorkload getTrainer(WorkloadRequestDto request) {
-        TrainerWorkload trainerWorkload = repository.getTrainer(request.getUsername());
+        TrainerWorkload trainerWorkload = repository.findByUsername(request.getUsername());
         if (Objects.isNull(trainerWorkload)) {
             trainerWorkload = new TrainerWorkload();
         }
@@ -53,7 +53,7 @@ public class WorkloadServiceImpl implements WorkloadService {
 
     @Override
     public DurationResponseDto getWorkloadDuration(DurationRequestDto request) {
-        TrainerWorkload trainerWorkload = repository.getTrainer(request.getUsername());
+        TrainerWorkload trainerWorkload = repository.findByUsername(request.getUsername());
         if (Objects.isNull(trainerWorkload)) {
             throw new RuntimeException("Trainer with such username " + request.getUsername() + " not found");
         }

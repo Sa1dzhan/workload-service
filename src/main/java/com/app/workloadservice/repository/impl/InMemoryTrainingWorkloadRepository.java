@@ -12,12 +12,12 @@ public class InMemoryTrainingWorkloadRepository implements WorkloadRepository {
     HashMap<String, TrainerWorkload> inMemory = new HashMap<>();
 
     @Override
-    public void saveTrainer(TrainerWorkload trainerWorkload) {
+    public void save(TrainerWorkload trainerWorkload) {
         inMemory.putIfAbsent(trainerWorkload.getUsername(), trainerWorkload);
     }
 
     @Override
-    public TrainerWorkload getTrainer(String username) {
+    public TrainerWorkload findByUsername(String username) {
         return inMemory.get(username);
     }
 
