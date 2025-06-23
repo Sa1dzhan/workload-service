@@ -3,10 +3,12 @@ package com.app.workloadservice.dto;
 import com.app.workloadservice.util.ActionType;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 
 @Data
+@NoArgsConstructor
 public class WorkloadRequestDto {
     @NotNull
     private String username;

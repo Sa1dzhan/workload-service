@@ -4,8 +4,10 @@ import com.app.workloadservice.dto.DurationRequestDto;
 import com.app.workloadservice.dto.DurationResponseDto;
 import com.app.workloadservice.dto.WorkloadRequestDto;
 import com.app.workloadservice.entity.TrainerWorkload;
+import com.app.workloadservice.messaging.WorkloadStatusSender;
 import com.app.workloadservice.repository.WorkloadRepository;
 import com.app.workloadservice.service.WorkloadService;
+import com.app.workloadservice.util.WorkloadStatus;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -17,6 +19,7 @@ import java.util.Objects;
 @RequiredArgsConstructor
 public class WorkloadServiceImpl implements WorkloadService {
     private final WorkloadRepository repository;
+    private final WorkloadStatusSender statusSender;
 
     @Override
     public void updateTrainerWorkload(WorkloadRequestDto request) {
@@ -30,9 +33,12 @@ public class WorkloadServiceImpl implements WorkloadService {
             );
 
             repository.save(trainerWorkload);
+
+            statusSender.sendWorkloadStatusUpdate(trainerWorkload.getUsername(), WorkloadStatus.SUCCESS);
             log.info("Updated workload for username {}", trainerWorkload.getUsername());
         } catch (Exception ex) {
             log.error("Error occurred: {}", ex.getMessage());
+            statusSender.sendWorkloadStatusUpdate(request.getUsername(), WorkloadStatus.FAILED);
             throw new RuntimeException(ex);
         }
     }
@@ -43,7 +49,7 @@ public class WorkloadServiceImpl implements WorkloadService {
             trainerWorkload = new TrainerWorkload();
         }
 
-        trainerWorkload.setUsername(trainerWorkload.getUsername());
+        trainerWorkload.setUsername(request.getUsername());
         trainerWorkload.setFirstName(request.getFirstName());
         trainerWorkload.setLastName(request.getLastName());
         trainerWorkload.setStatus(request.getIsActive());
