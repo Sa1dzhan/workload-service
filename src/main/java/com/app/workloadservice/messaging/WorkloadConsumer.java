@@ -21,6 +21,7 @@ public class WorkloadConsumer {
     public void processWorkloadUpdate(WorkloadMessage<WorkloadRequestDto> message) {
         try {
             MDC.put("transactionId", message.getTransactionId());
+            MDC.put("correlationId", message.getCorrelationId());
 
             workloadService.updateTrainerWorkload(message.getPayload());
 

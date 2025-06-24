@@ -1,6 +1,5 @@
 package com.app.workloadservice.dto;
 
-import com.app.workloadservice.util.ActionType;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -30,4 +29,9 @@ public class WorkloadRequestDto {
 
     @NotNull
     private ActionType actionType;
+
+
+    public enum ActionType {
+        ADD, DELETE
+    }
 }

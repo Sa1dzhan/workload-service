@@ -3,11 +3,11 @@ package com.app.workloadservice.service.impl;
 import com.app.workloadservice.dto.DurationRequestDto;
 import com.app.workloadservice.dto.DurationResponseDto;
 import com.app.workloadservice.dto.WorkloadRequestDto;
+import com.app.workloadservice.dto.message.WorkloadResponseMessage;
 import com.app.workloadservice.entity.TrainerWorkload;
 import com.app.workloadservice.messaging.WorkloadStatusSender;
 import com.app.workloadservice.repository.WorkloadRepository;
 import com.app.workloadservice.service.WorkloadService;
-import com.app.workloadservice.util.WorkloadStatus;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -34,11 +34,11 @@ public class WorkloadServiceImpl implements WorkloadService {
 
             repository.save(trainerWorkload);
 
-            statusSender.sendWorkloadStatusUpdate(trainerWorkload.getUsername(), WorkloadStatus.SUCCESS);
+            statusSender.sendWorkloadStatusUpdate(trainerWorkload.getUsername(), WorkloadResponseMessage.WorkloadStatus.SUCCESS);
             log.info("Updated workload for username {}", trainerWorkload.getUsername());
         } catch (Exception ex) {
             log.error("Error occurred: {}", ex.getMessage());
-            statusSender.sendWorkloadStatusUpdate(request.getUsername(), WorkloadStatus.FAILED);
+            statusSender.sendWorkloadStatusUpdate(request.getUsername(), WorkloadResponseMessage.WorkloadStatus.FAILED);
             throw new RuntimeException(ex);
         }
     }

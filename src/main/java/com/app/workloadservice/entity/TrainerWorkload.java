@@ -1,6 +1,6 @@
 package com.app.workloadservice.entity;
 
-import com.app.workloadservice.util.ActionType;
+import com.app.workloadservice.dto.WorkloadRequestDto;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -21,16 +21,16 @@ public class TrainerWorkload {
     private Boolean status;
     private HashMap<Integer, YearsInfo> years = new HashMap<>();
 
-    public void updateWorkload(LocalDate trainingDate, long trainingDuration, ActionType actionType) {
+    public void updateWorkload(LocalDate trainingDate, long trainingDuration, WorkloadRequestDto.ActionType actionType) {
         int year = trainingDate.getYear();
         int month = trainingDate.getMonth().getValue();
 
         YearsInfo yearInfo = getOrCreateYear(year);
         MonthsInfo monthInfo = getOrCreateMonth(yearInfo, month);
 
-        if (actionType == ActionType.ADD) {
+        if (actionType == WorkloadRequestDto.ActionType.ADD) {
             monthInfo.setDuration(monthInfo.getDuration() + trainingDuration);
-        } else if (actionType == ActionType.DELETE) {
+        } else if (actionType == WorkloadRequestDto.ActionType.DELETE) {
             monthInfo.setDuration(Math.max(0, monthInfo.getDuration() - trainingDuration));
         }
     }

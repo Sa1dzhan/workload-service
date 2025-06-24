@@ -6,7 +6,6 @@ import com.app.workloadservice.dto.WorkloadRequestDto;
 import com.app.workloadservice.entity.TrainerWorkload;
 import com.app.workloadservice.repository.WorkloadRepository;
 import com.app.workloadservice.service.impl.WorkloadServiceImpl;
-import com.app.workloadservice.util.ActionType;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -46,7 +45,7 @@ class WorkloadServiceImplTest {
         workloadRequest.setIsActive(true);
         workloadRequest.setTrainingDate(testDate);
         workloadRequest.setTrainingDuration(100L);
-        workloadRequest.setActionType(ActionType.ADD);
+        workloadRequest.setActionType(WorkloadRequestDto.ActionType.ADD);
 
         durationRequest = new DurationRequestDto();
         durationRequest.setUsername("testuser");
@@ -92,7 +91,7 @@ class WorkloadServiceImplTest {
 
     @Test
     void testGetWorkloadDuration_ExistingTrainer() {
-        existingTrainer.updateWorkload(testDate, 150L, ActionType.ADD);
+        existingTrainer.updateWorkload(testDate, 150L, WorkloadRequestDto.ActionType.ADD);
         when(repository.findByUsername("testuser")).thenReturn(existingTrainer);
 
         DurationResponseDto response = workloadService.getWorkloadDuration(durationRequest);
@@ -146,8 +145,8 @@ class WorkloadServiceImplTest {
 
     @Test
     void testUpdateTrainerWorkload_DeleteAction() {
-        workloadRequest.setActionType(ActionType.DELETE);
-        existingTrainer.updateWorkload(testDate, 200L, ActionType.ADD);
+        workloadRequest.setActionType(WorkloadRequestDto.ActionType.DELETE);
+        existingTrainer.updateWorkload(testDate, 200L, WorkloadRequestDto.ActionType.ADD);
         when(repository.findByUsername("testuser")).thenReturn(existingTrainer);
 
         workloadService.updateTrainerWorkload(workloadRequest);

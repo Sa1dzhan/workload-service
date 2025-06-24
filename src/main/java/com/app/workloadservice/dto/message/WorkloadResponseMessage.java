@@ -1,12 +1,19 @@
 package com.app.workloadservice.dto.message;
 
-import com.app.workloadservice.util.WorkloadStatus;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
-
+@EqualsAndHashCode(callSuper = true)
 @Data
-public class WorkloadResponseMessage {
-    private String transactionId;
-    private String username;
+@NoArgsConstructor
+@AllArgsConstructor
+public class WorkloadResponseMessage extends RequestReplyBaseMessage {
     private WorkloadStatus status;
+
+    public enum WorkloadStatus {
+        SUCCESS,
+        FAILED
+    }
 }

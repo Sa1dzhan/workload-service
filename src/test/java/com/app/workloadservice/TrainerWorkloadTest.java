@@ -1,7 +1,7 @@
 package com.app.workloadservice;
 
+import com.app.workloadservice.dto.WorkloadRequestDto;
 import com.app.workloadservice.entity.TrainerWorkload;
-import com.app.workloadservice.util.ActionType;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -30,9 +30,9 @@ class TrainerWorkloadTest {
         long initialDuration = 100L;
         long additionalDuration = 50L;
 
-        trainerWorkload.updateWorkload(testDate, initialDuration, ActionType.ADD);
+        trainerWorkload.updateWorkload(testDate, initialDuration, WorkloadRequestDto.ActionType.ADD);
 
-        trainerWorkload.updateWorkload(testDate, additionalDuration, ActionType.ADD);
+        trainerWorkload.updateWorkload(testDate, additionalDuration, WorkloadRequestDto.ActionType.ADD);
 
         long finalDuration = trainerWorkload.getDurationForMonth(2024, 1);
         assertEquals(initialDuration + additionalDuration, finalDuration);
@@ -43,9 +43,9 @@ class TrainerWorkloadTest {
         long initialDuration = 100L;
         long reductionDuration = 30L;
 
-        trainerWorkload.updateWorkload(testDate, initialDuration, ActionType.ADD);
+        trainerWorkload.updateWorkload(testDate, initialDuration, WorkloadRequestDto.ActionType.ADD);
 
-        trainerWorkload.updateWorkload(testDate, reductionDuration, ActionType.DELETE);
+        trainerWorkload.updateWorkload(testDate, reductionDuration, WorkloadRequestDto.ActionType.DELETE);
 
         long finalDuration = trainerWorkload.getDurationForMonth(2024, 1);
         assertEquals(initialDuration - reductionDuration, finalDuration);
@@ -56,9 +56,9 @@ class TrainerWorkloadTest {
         long initialDuration = 50L;
         long reductionDuration = 100L;
 
-        trainerWorkload.updateWorkload(testDate, initialDuration, ActionType.ADD);
+        trainerWorkload.updateWorkload(testDate, initialDuration, WorkloadRequestDto.ActionType.ADD);
 
-        trainerWorkload.updateWorkload(testDate, reductionDuration, ActionType.DELETE);
+        trainerWorkload.updateWorkload(testDate, reductionDuration, WorkloadRequestDto.ActionType.DELETE);
 
         long finalDuration = trainerWorkload.getDurationForMonth(2024, 1);
         assertEquals(0L, finalDuration);
@@ -72,8 +72,8 @@ class TrainerWorkloadTest {
         long januaryDuration = 100L;
         long februaryDuration = 200L;
 
-        trainerWorkload.updateWorkload(januaryDate, januaryDuration, ActionType.ADD);
-        trainerWorkload.updateWorkload(februaryDate, februaryDuration, ActionType.ADD);
+        trainerWorkload.updateWorkload(januaryDate, januaryDuration, WorkloadRequestDto.ActionType.ADD);
+        trainerWorkload.updateWorkload(februaryDate, februaryDuration, WorkloadRequestDto.ActionType.ADD);
 
         assertEquals(januaryDuration, trainerWorkload.getDurationForMonth(2024, 1));
         assertEquals(februaryDuration, trainerWorkload.getDurationForMonth(2024, 2));
@@ -87,8 +87,8 @@ class TrainerWorkloadTest {
         long duration2024 = 100L;
         long duration2025 = 200L;
 
-        trainerWorkload.updateWorkload(date2024, duration2024, ActionType.ADD);
-        trainerWorkload.updateWorkload(date2025, duration2025, ActionType.ADD);
+        trainerWorkload.updateWorkload(date2024, duration2024, WorkloadRequestDto.ActionType.ADD);
+        trainerWorkload.updateWorkload(date2025, duration2025, WorkloadRequestDto.ActionType.ADD);
 
         assertEquals(duration2024, trainerWorkload.getDurationForMonth(2024, 1));
         assertEquals(duration2025, trainerWorkload.getDurationForMonth(2025, 1));
