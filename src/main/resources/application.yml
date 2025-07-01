@@ -16,6 +16,9 @@ spring:
       simple:
         acknowledge-mode: auto
         prefetch: 1
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017/trainer_workload_db
 
 server:
   port: 8081
