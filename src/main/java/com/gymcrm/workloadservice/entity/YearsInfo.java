@@ -1,9 +1,6 @@
 package com.gymcrm.workloadservice.entity;
 
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -11,7 +8,8 @@ import java.util.Map;
 @Getter
 @Setter
 @ToString
-@RequiredArgsConstructor
+@NoArgsConstructor
+@AllArgsConstructor
 public class YearsInfo {
     private Map<Integer, MonthsInfo> months = new HashMap<>();
 }
