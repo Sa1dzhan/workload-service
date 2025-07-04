@@ -1,6 +1,6 @@
 package com.gymcrm.workloadservice.config;
 
-import com.gymcrm.workloadservice.entity.TrainerWorkload;
+import com.gymcrm.workloadservice.entity.TrainerWorkloadDocument;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Sort;
@@ -17,14 +17,14 @@ public class MongoDBIndexer {
     @PostConstruct
     public void createIndexes() {
         // compound index = {firstName, lastName}
-        mongoTemplate.indexOps(TrainerWorkload.class)
+        mongoTemplate.indexOps(TrainerWorkloadDocument.class)
                 .ensureIndex(new Index()
                         .on("firstName", Sort.Direction.ASC)
                         .on("lastName", Sort.Direction.ASC)
                         .named("firstName_lastName_idx"));
 
         // index on username
-        mongoTemplate.indexOps(TrainerWorkload.class)
+        mongoTemplate.indexOps(TrainerWorkloadDocument.class)
                 .ensureIndex(new Index()
                         .on("username", Sort.Direction.ASC)
                         .unique()
