@@ -23,5 +23,5 @@ public class TrainerWorkloadDocument {
     private String firstName;
     private String lastName;
     private Boolean status;
-    private HashMap<Integer, YearsInfo> years = new HashMap<>();
+    private HashMap<Integer, HashMap<Integer, Long>> years = new HashMap<>();
 }
