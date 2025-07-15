@@ -15,6 +15,7 @@ import java.util.Objects;
 @ToString
 @RequiredArgsConstructor
 public class TrainerWorkload {
+    private String id;
     private String username;
     private String firstName;
     private String lastName;
