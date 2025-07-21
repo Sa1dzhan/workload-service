@@ -1,4 +1,4 @@
-package com.gymcrm.workloadservice;
+package com.gymcrm.workloadservice.unit;
 
 import com.gymcrm.dto.workload.WorkloadRequestDto;
 import com.gymcrm.workloadservice.entity.TrainerWorkload;

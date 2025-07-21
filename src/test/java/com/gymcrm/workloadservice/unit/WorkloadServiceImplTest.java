@@ -1,4 +1,4 @@
-package com.gymcrm.workloadservice;
+package com.gymcrm.workloadservice.unit;
 
 import com.gymcrm.dto.workload.DurationRequestDto;
 import com.gymcrm.dto.workload.DurationResponseDto;
